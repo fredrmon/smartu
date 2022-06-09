@@ -38,4 +38,4 @@ docker-compose up
 ```
 
 For both variations, the database needs to be initialized on first time start-up: go to [phpMyAdmin](localhost:8081) (localhost:8081).
-First run the `create_table.sql` script, then run `insert_data.sql`.
+First run the `create_tables.sql` script, then run `insert_data.sql`.
