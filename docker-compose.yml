@@ -1,0 +1,54 @@
+# Dev
+version: "3.1"
+services:
+  database-mariadb:
+    container_name: database
+    build:
+      context: ./database
+      dockerfile: db.dockerfile
+    environment:
+      - MARIADB_ROOT_PASSWORD=password
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - smartu
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - "database-mariadb:db"
+    ports:
+      - "8081:80"
+    networks:
+      - smartu
+  rest-api:
+    container_name: backend
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    environment:
+      - MARIADB_HOST_IP=database
+    depends_on:
+      - database-mariadb
+    ports:
+      - "8080:8080"
+    networks:
+      - smartu
+  client:
+    container_name: react-client
+    build:
+      context: ./client
+      dockerfile: client.dockerfile
+    environment:
+      - PROXY_TARGET=backend
+    depends_on:
+      - rest-api
+    ports:
+      - "3000:3000"
+    networks:
+      - smartu
+
+networks:
+  smartu:
