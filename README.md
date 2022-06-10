@@ -37,5 +37,5 @@ npm start
 docker-compose up
 ```
 
-For both variations, the database needs to be initialized on first time start-up: go to [phpMyAdmin](localhost:8081) (localhost:8081).
+For both variations, the database needs to be initialized on first time start-up: go to [phpMyAdmin](localhost:8081) (localhost:8081). Use default credentials for login, username: root, password: password.
 First run the `create_tables.sql` script, then run `insert_data.sql`.
